@@ -7,6 +7,8 @@ namespace PicPicker;
 [QuickMarkup("""
     using DesktopFlyouts;
     string NewImageName;
+    string NewImageExtension;
+    bool CanSave => `!string.IsNullOrWhiteSpace(NewImageName) && NewImageExtension is { Length: > 1 } && NewImageExtension.StartsWith('.')`;
     ImageSource PreviewImage;
 
     <root IsBackdropEnabled BackdropKind=DesktopAcrylic Placement=TopCenter !HideOnLostFocus PopupDirection=TopToBottom>
@@ -18,8 +20,14 @@ namespace PicPicker;
                 <Image Grid.Column=0 Source=`PreviewImage` Width=200 Height=200 Stretch=Uniform />
                 <StackPanel Grid.Column=1 Spacing=8 VerticalAlignment=Center>
                     <TextBlock Text="Save image from clipboard:" />
-                    nameInput = <TextBox PlaceholderText="Image name" Text<=>`NewImageName` MinWidth=200 />
-                    <Button Content="Save" @Click+=`SaveImage()` HorizontalAlignment=Right />
+                    <StackPanel Orientation=Horizontal Spacing=4>
+                        nameInput = <TextBox PlaceholderText="Image name" Text<=>`NewImageName` MinWidth=170 />
+                        <TextBox PlaceholderText=".ext" Text<=>`NewImageExtension` Width=60 />
+                    </StackPanel>
+                    <StackPanel Orientation=Horizontal HorizontalAlignment=Right Spacing=8>
+                        <Button Content="Cancel" @Click+=`Cancel()` />
+                        <Button Content="Save" @Click+=`SaveImage()` IsEnabled=`CanSave` />
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </DesktopFlyoutIsland>
@@ -28,13 +36,12 @@ namespace PicPicker;
 partial class AddImageFlyout : DesktopFlyout
 {
     readonly byte[] _imageData;
-    readonly string _fileExtension;
     public event Action? Completed;
 
     public AddImageFlyout(byte[] imageData, string fileExtension = ".png")
     {
         _imageData = imageData;
-        _fileExtension = fileExtension;
+        NewImageExtension = fileExtension;
         InitializeComponent();
         Init();
         Loaded += (s, e) => nameInput.Focus(FocusState.Programmatic);
@@ -55,20 +62,27 @@ partial class AddImageFlyout : DesktopFlyout
         catch { }
     }
 
+    void Cancel()
+    {
+        Hide();
+        Completed?.Invoke();
+    }
+
     async void SaveImage()
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(NewImageName))
+            var ext = NewImageExtension;
+            if (string.IsNullOrWhiteSpace(NewImageName) || string.IsNullOrWhiteSpace(ext) || !ext.StartsWith('.'))
                 return;
 
-            var fileName = NewImageName.Trim() + _fileExtension;
+            var fileName = NewImageName.Trim() + ext;
             var imageDirectory = (string)ApplicationData.Current.LocalSettings.Values["ImageDirectory"];
             var targetPath = System.IO.Path.Combine(imageDirectory, fileName);
             var counter = 1;
             while (File.Exists(targetPath))
             {
-                targetPath = System.IO.Path.Combine(imageDirectory, $"{NewImageName.Trim()}_{counter}{_fileExtension}");
+                targetPath = System.IO.Path.Combine(imageDirectory, $"{NewImageName.Trim()}_{counter}{ext}");
                 counter++;
             }
 
