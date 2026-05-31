@@ -1,6 +1,8 @@
 using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Path = System.IO.Path;
 
 namespace PicPicker;
@@ -84,19 +86,54 @@ public partial class GalleryPage : Grid
         try
         {
             var dataView = Clipboard.GetContent();
-            if (!dataView.Contains(StandardDataFormats.Bitmap))
+            byte[]? imageData = null;
+            string? fileExt = null;
+
+            if (dataView.Contains(StandardDataFormats.StorageItems))
+            {
+                var items = await dataView.GetStorageItemsAsync();
+                var file = items.OfType<StorageFile>().FirstOrDefault();
+                if (file != null)
+                {
+                    var ext = Path.GetExtension(file.Path).ToLower();
+                    if (ext is ".jpg" or ".jpeg" or ".png" or ".bmp" or ".gif" or ".webp")
+                    {
+                        using var fileStream = await file.OpenAsync(FileAccessMode.Read);
+                        using var memStream = new MemoryStream();
+                        await fileStream.AsStream().CopyToAsync(memStream);
+                        imageData = memStream.ToArray();
+                        fileExt = ext;
+                    }
+                }
+            }
+
+            if (imageData == null && dataView.Contains("PNG"))
+            {
+                var item = await dataView.GetDataAsync("PNG");
+                if (item is IRandomAccessStream pngStream)
+                {
+                    using var memStream = new MemoryStream();
+                    await pngStream.AsStream().CopyToAsync(memStream);
+                    imageData = memStream.ToArray();
+                    fileExt = ".png";
+                }
+            }
+
+            if (imageData == null && dataView.Contains(StandardDataFormats.Bitmap))
+            {
+                var streamRef = await dataView.GetBitmapAsync();
+                using var stream = await streamRef.OpenReadAsync();
+                using var memStream = new MemoryStream();
+                await stream.AsStream().CopyToAsync(memStream);
+                imageData = memStream.ToArray();
+            }
+
+            if (imageData == null)
                 return;
-
-            var streamRef = await dataView.GetBitmapAsync();
-            using var stream = await streamRef.OpenReadAsync();
-
-            using var memStream = new MemoryStream();
-            await stream.AsStream().CopyToAsync(memStream);
-            var imageData = memStream.ToArray();
 
             HideParentRequested?.Invoke();
 
-            var flyout = new AddImageFlyout(imageData);
+            var flyout = new AddImageFlyout(imageData, fileExt ?? ".png");
             flyout.Completed += () =>
             {
                 ShowParentRequested?.Invoke();

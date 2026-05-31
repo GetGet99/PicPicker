@@ -28,11 +28,13 @@ namespace PicPicker;
 partial class AddImageFlyout : DesktopFlyout
 {
     readonly byte[] _imageData;
+    readonly string _fileExtension;
     public event Action? Completed;
 
-    public AddImageFlyout(byte[] imageData)
+    public AddImageFlyout(byte[] imageData, string fileExtension = ".png")
     {
         _imageData = imageData;
+        _fileExtension = fileExtension;
         InitializeComponent();
         Init();
         Loaded += (s, e) => nameInput.Focus(FocusState.Programmatic);
@@ -60,13 +62,13 @@ partial class AddImageFlyout : DesktopFlyout
             if (string.IsNullOrWhiteSpace(NewImageName))
                 return;
 
-            var fileName = NewImageName.Trim() + ".png";
+            var fileName = NewImageName.Trim() + _fileExtension;
             var imageDirectory = (string)ApplicationData.Current.LocalSettings.Values["ImageDirectory"];
             var targetPath = System.IO.Path.Combine(imageDirectory, fileName);
             var counter = 1;
             while (File.Exists(targetPath))
             {
-                targetPath = System.IO.Path.Combine(imageDirectory, $"{NewImageName.Trim()}_{counter}.png");
+                targetPath = System.IO.Path.Combine(imageDirectory, $"{NewImageName.Trim()}_{counter}{_fileExtension}");
                 counter++;
             }
 
