@@ -40,10 +40,18 @@ partial class ImageDisplay : IQuickMarkupComponent
         try
         {
             var storageFile = await StorageFile.GetFileFromPathAsync(path);
+            var streamRef = RandomAccessStreamReference.CreateFromFile(storageFile);
 
             var dataPackage = new DataPackage();
-            dataPackage.SetBitmap(
-                RandomAccessStreamReference.CreateFromFile(storageFile));
+            dataPackage.SetBitmap(streamRef);
+            dataPackage.SetStorageItems(new[] { storageFile });
+
+            var ext = System.IO.Path.GetExtension(path).ToLower();
+            if (ext is ".png")
+                dataPackage.SetData("PNG", streamRef);
+            else if (ext is ".gif")
+                dataPackage.SetData("GIF", streamRef);
+
             dataPackage.RequestedOperation = DataPackageOperation.Copy;
             Clipboard.SetContent(dataPackage);
             Clipboard.Flush();
