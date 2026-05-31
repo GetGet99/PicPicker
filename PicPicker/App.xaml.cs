@@ -62,6 +62,11 @@ public partial class App : Application
         else activeFlyout.Show();
     }
 
+    public void OnAppActivated()
+    {
+        activeFlyout?.DispatcherQueue.TryEnqueue(() => activeFlyout?.Show());
+    }
+
     void OnOobeCompleted(string path)
     {
         ApplicationData.Current.LocalSettings.Values["ImageDirectory"] = path;
