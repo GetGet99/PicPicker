@@ -361,9 +361,9 @@
     <Language Code="zu-za" InMinimumRequirementSet="true" />
   </SupportedLocales>
   <ProductReservedInfo>
-    <MainPackageIdentityName>3749Get.ImgPicker</MainPackageIdentityName>
+    <MainPackageIdentityName>3749Get.PocketPic</MainPackageIdentityName>
     <ReservedNames>
-      <ReservedName>ImgPicker</ReservedName>
+      <ReservedName>PocketPic</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>

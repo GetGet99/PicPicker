@@ -4,14 +4,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using AppInstance = Microsoft.Windows.AppLifecycle.AppInstance;
 
-namespace ImgPicker;
+namespace PocketPic;
 
 // https://johngagefaulkner.github.io/01-Build-a-Single-Instance-WinUI-3-App-2026-Gemini-2.5-Pro.html
 
 public static class Program
 {
     // Define a unique key for your app instance
-    public const string AppInstanceKey = "get-ImgPicker";
+    public const string AppInstanceKey = "get-PocketPic";
 
     [STAThread] // Must be single-threaded
     static void Main(string[] args)

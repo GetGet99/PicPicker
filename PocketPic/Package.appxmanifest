@@ -9,14 +9,14 @@
   IgnorableNamespaces="uap rescap uap5">
 
   <Identity
-    Name="3749Get.ImgPicker"
+    Name="3749Get.PocketPic"
     Publisher="CN=95122495-0FC5-4CBE-B461-D28358AFE57A"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="a534e67d-53a7-4905-863c-4a246ad5478b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>ImgPicker</DisplayName>
+    <DisplayName>PocketPic</DisplayName>
     <PublisherDisplayName>Get</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -35,8 +35,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="ImgPicker"
-        Description="ImgPicker"
+        DisplayName="PocketPic"
+        Description="PocketPic"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
@@ -44,8 +44,8 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
 		<Extensions>
-			<uap5:Extension Category="windows.startupTask" Executable="ImgPicker.exe" EntryPoint="Windows.FullTrustApplication">
-				<uap5:StartupTask TaskId="ImgPickerStartupTaskId" Enabled="true" DisplayName="ImgPicker" />
+			<uap5:Extension Category="windows.startupTask" Executable="PocketPic.exe" EntryPoint="Windows.FullTrustApplication">
+				<uap5:StartupTask TaskId="PocketPicStartupTaskId" Enabled="true" DisplayName="PocketPic" />
 			</uap5:Extension>
 		</Extensions>
     </Application>

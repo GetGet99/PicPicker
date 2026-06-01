@@ -3,7 +3,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
-namespace ImgPicker;
+namespace PocketPic;
 
 [QuickMarkup("""
     using DesktopFlyouts;
@@ -13,7 +13,7 @@ namespace ImgPicker;
     <root IsBackdropEnabled BackdropKind=DesktopAcrylic Placement=TopCenter !HideOnLostFocus PopupDirection=TopToBottom>
         <DesktopFlyoutIsland>
             <StackPanel Margin=24 Spacing=12 MaxWidth=400>
-                <TextBlock Text="Welcome to ImgPicker" FontSize=20 TextAlignment=Center />
+                <TextBlock Text="Welcome to PocketPic" FontSize=20 TextAlignment=Center />
                 <TextBlock Text="Select a folder to store your images." FontSize=13 TextWrapping=Wrap TextAlignment=Center />
 
                 <Button Content="Choose Folder" CenterH

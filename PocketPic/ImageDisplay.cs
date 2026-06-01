@@ -3,7 +3,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
-namespace ImgPicker;
+namespace PocketPic;
 
 [QuickMarkup("""
     using Windows.UI;

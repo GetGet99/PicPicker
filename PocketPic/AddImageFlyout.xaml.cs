@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Automation;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
-namespace ImgPicker;
+namespace PocketPic;
 
 [QuickMarkup("""
     using DesktopFlyouts;

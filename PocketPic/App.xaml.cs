@@ -5,7 +5,7 @@ using Windows.Storage;
 using Windows.UI.Popups;
 using WinRT.Interop;
 
-namespace ImgPicker;
+namespace PocketPic;
 
 public partial class App : Application
 {
@@ -37,7 +37,7 @@ public partial class App : Application
         };
         systemTrayIcon = new(
             $"{Package.Current.InstalledLocation.Path}/Assets/icon.ico",
-            "ImgPicker",
+            "PocketPic",
             Guid.Parse("150b459a-c062-4db6-9750-6dce3ab19462")
         );
         systemTrayIcon.Show();
@@ -108,7 +108,7 @@ public partial class App : Application
     }
     async void EnableStartup()
     {
-        var startupTask = await StartupTask.GetAsync("ImgPickerStartupTaskId"); // Pass the task ID you specified in the appxmanifest file
+        var startupTask = await StartupTask.GetAsync("PocketPicStartupTaskId"); // Pass the task ID you specified in the appxmanifest file
         switch (startupTask.State)
         {
             case StartupTaskState.Disabled:

@@ -1,6 +1,6 @@
 using DesktopFlyouts;
 
-namespace ImgPicker;
+namespace PocketPic;
 
 [QuickMarkup("""
     using DesktopFlyouts;
@@ -8,7 +8,7 @@ namespace ImgPicker;
         <DesktopFlyoutIsland>
             <StackPanel Margin=24 Spacing=16 MaxWidth=400>
                 <TextBlock Text="You're all set!" FontSize=20 TextAlignment=Center />
-                <TextBlock Text="To open ImgPicker, click the ImgPicker icon in the bottom-right corner of your taskbar (system tray)." FontSize=13 TextWrapping=Wrap TextAlignment=Center />
+                <TextBlock Text="To open PocketPic, click the PocketPic icon in the bottom-right corner of your taskbar (system tray)." FontSize=13 TextWrapping=Wrap TextAlignment=Center />
                 <Border CornerRadius=8>
                     <Image Source=`new BitmapImage(new Uri($"{Package.Current.InstalledLocation.Path}/Assets/trayicon.png"))` Stretch=Uniform MaxWidth=300 />
                 </Border>

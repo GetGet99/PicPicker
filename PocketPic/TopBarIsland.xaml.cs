@@ -1,6 +1,6 @@
 ﻿using DesktopFlyouts;
 
-namespace ImgPicker;
+namespace PocketPic;
 
 [QuickMarkup("""
     using DesktopFlyouts;

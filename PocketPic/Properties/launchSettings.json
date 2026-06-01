@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "ImgPicker (Package)": {
+    "PocketPic (Package)": {
       "commandName": "MsixPackage"
     },
-    "ImgPicker (Unpackaged)": {
+    "PocketPic (Unpackaged)": {
       "commandName": "Project"
     }
   }

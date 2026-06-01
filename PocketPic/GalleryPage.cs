@@ -5,7 +5,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Path = System.IO.Path;
 
-namespace ImgPicker;
+namespace PocketPic;
 
 [QuickMarkup("""
     bool IsTeachingTipOpen = false;
