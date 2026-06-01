@@ -1,6 +1,8 @@
 ﻿using DesktopFlyouts;
+using System.Diagnostics;
 using Windows.Graphics;
 using Windows.Storage;
+using Windows.UI.Popups;
 using WinRT.Interop;
 
 namespace PicPicker;
@@ -90,6 +92,7 @@ public partial class App : Application
         ApplicationData.Current.LocalSettings.Values["ImageDirectory"] = path;
         activeFlyout?.Hide();
 
+        EnableStartup();
         instruction.Completed += () =>
         {
             instruction.Hide();
@@ -102,5 +105,20 @@ public partial class App : Application
         };
         activeFlyout = instruction;
         instruction.Show();
+    }
+    async void EnableStartup()
+    {
+        var startupTask = await StartupTask.GetAsync("PicPickerStartupTaskId"); // Pass the task ID you specified in the appxmanifest file
+        switch (startupTask.State)
+        {
+            case StartupTaskState.Disabled:
+                StartupTaskState newState = await startupTask.RequestEnableAsync();
+                Debug.WriteLine("Request to enable startup, result = {0}", newState);
+                break;
+            case StartupTaskState.DisabledByUser:
+            case StartupTaskState.DisabledByPolicy:
+            case StartupTaskState.Enabled:
+                break;
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace PicPicker;
             Margin=4
             BorderBrush=`theme.CardStroke`
             BorderThickness=1
-            Width=200 MinHeight=100
+            Width=200 MinHeight=150
             @Click+=`CopyImageToClipboard(ImagePath)`
             Padding=0
             ContextFlyout=<Flyout Placement=RightEdgeAlignedTop>
@@ -44,11 +44,9 @@ namespace PicPicker;
                     </VStack>
                 </ScrollViewer>
             </Flyout>
-            //<MenuFlyout>
-            //    <MenuFlyoutItem Icon=<SymbolIcon(Delete) /> Text="Delete" @Click+=`DeleteRequest?.Invoke()` />
-            //</MenuFlyout>
             AutomationProperties.Name="ImagePath"
             AutomationProperties.AccessibilityView=Raw
+            VerticalContentAlignment=Stretch
         >
             <Grid>
                 <Image Source=`ImageSource`
