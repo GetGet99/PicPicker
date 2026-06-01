@@ -8,6 +8,8 @@ using Path = System.IO.Path;
 namespace ImgPicker;
 
 [QuickMarkup("""
+    bool IsTeachingTipOpen = false;
+
     string SearchQuery;
 
     <setup>
@@ -27,8 +29,8 @@ namespace ImgPicker;
                     Text<=>`SearchQuery`
                     @TextChanged+=`ApplyFilter()`
                 />
-                <Button Grid.Column=1 Content="+"
-                    @Click+=`OnAddImageClick()` />
+                addButton = <Button Grid.Column=1 Content=<SymbolIcon(Add) />
+                    Padding=5 @Click+=`OnAddImageClick()` />
             </Grid>
             
             <ScrollViewer Grid.Row=1>
@@ -38,6 +40,14 @@ namespace ImgPicker;
                     }
                 </VariableSizedWrapGrid>
             </ScrollViewer>
+
+            teachingTip = <TeachingTip Target=`addButton`
+                Title="Tip"
+                Subtitle="To add images, copy them to your clipboard first, then click +"
+                PreferredPlacement=Bottom
+                IsOpen=`IsTeachingTipOpen`
+                @CloseButtonClick+=`IsTeachingTipOpen = false`
+                />
             
         </Grid>
     </root>
@@ -131,7 +141,10 @@ public partial class GalleryPage : Grid
             }
 
             if (imageData == null)
+            {
+                IsTeachingTipOpen = true;
                 return;
+            }
 
             HideParentRequested?.Invoke();
 
