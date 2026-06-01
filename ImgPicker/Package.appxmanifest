@@ -9,11 +9,11 @@
   IgnorableNamespaces="uap rescap uap5">
 
   <Identity
-    Name="5ad1cc59-a0c2-499a-9379-c0d26207188e"
-    Publisher="CN=Get"
+    Name="3749Get.ImgPicker"
+    Publisher="CN=95122495-0FC5-4CBE-B461-D28358AFE57A"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="5ad1cc59-a0c2-499a-9379-c0d26207188e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="a534e67d-53a7-4905-863c-4a246ad5478b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>ImgPicker</DisplayName>
